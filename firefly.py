@@ -23,62 +23,15 @@ action_time_2 = time.monotonic()
 reset_time_2 = time.monotonic()
 reset_time_3 = time.monotonic()
 reset_time_4 = time.monotonic()
+reset_time_5 = time.monotonic()
+reset_time_6 = time.monotonic()
 
-
-def pattern_one(action_time_input, light_number):
-    #First LED
-    #calculates the difference between when the loop started (action_time_1) and now)
-    time_from_action_1 = time.monotonic() - action_time_input
-
-    #using the time from when the loop started to determine if the light should be on or off
-    if time_from_action_1 < 9:
-        pixels[light_number] = (0, 0, 0)
-        pixels.show()
-        action_time =  action_time_input
-    if time_from_action_1 > 9 and time_from_action_1 < 20:
-        pixels[light_number] = (neo_r, neo_g, neo_b)
-        pixels.show()
-        action_time =  action_time_input
-    if time_from_action_1 > 20:
-        pixels[light_number] = (0, 0, 0)
-        pixels.show()
-        #this is the end of the cycle so the time counting is reset
-        action_time = time.monotonic()
-    return action_time
-
-def pattern_two(action_time_input, light_number):
-    # Second LED
-    time_from_action_2 = time.monotonic() - action_time_input
-    action_time =  action_time_input
-    if time_from_action_2 < 4:
-        pixels[light_number] = (0, 0, 0)
-        pixels.show()
-
-    if 4 <= time_from_action_2 <= 6:
-        pixels[light_number] = (neo_r, neo_g, neo_b)
-        pixels.show()
-
-    if 7 < time_from_action_2 <= 9:
-        pixels[light_number] = (0, 0, 0)
-        pixels.show()
-
-    if 9 < time_from_action_2 <= 12:
-        pixels[light_number] = (neo_r, neo_g, neo_b)
-        pixels.show()
-
-    if 12 < time_from_action_2 <= 15:
-        pixels[light_number] = (0, 0, 0)
-        pixels.show()
-
-    if 15 < time_from_action_2 <= 22:
-        pixels[light_number] = (neo_r, neo_g, neo_b)
-        pixels.show()
-
-    if time_from_action_2 > 22:
-        pixels[light_number] = (0, 0, 0)
-        pixels.show()
-        action_time = time.monotonic()
-    return action_time
+def on(light_num):
+    pixels[light_num] = (neo_r, neo_g, neo_b)
+    pixels.show()
+def off(light_num):
+    pixels[light_num] = (0, 0, 0)
+    pixels.show()
 
 def brimleyi(reset_time_input, light_number):
     #calculates how much time has passed since the new zero
@@ -88,28 +41,18 @@ def brimleyi(reset_time_input, light_number):
 
     # on flash
     if 5 <= time_from_zero <= 5.5:
-        pixels[light_number] = (neo_r, neo_g, neo_b)
-        pixels.show()
-        print("b1")
-        print(time_from_zero)
+        on(light_number)
     elif 15 <= time_from_zero <= 15.5:
-        pixels[light_number] = (neo_r, neo_g, neo_b)
-        pixels.show()
-        print("b2")
-        print(time_from_zero)
+        on(light_number)
 
     # reset (includes 10 seconds after second flash - 5 on the back end and 5 on the front end)
     elif time_from_zero > 20:
-        pixels[light_number] = (0, 0, 0)
-        pixels.show()
+        off(light_number)
         reset_time = time.monotonic() + random.uniform(-3, 3)
 
     # all of the off times
     else:
-        pixels[light_number] = (0, 0, 0)
-        pixels.show()
-        print("b000000")
-        print(time_from_zero)
+        off(light_number)
 
     return reset_time
 
@@ -121,37 +64,60 @@ def macdermotti (reset_time_input, light_number):
 
     # on flash
     if 3 <= time_from_zero <= 3.5:
-        pixels[light_number] = (neo_r, neo_g, neo_b)
-        pixels.show()
+        on(light_number)
     elif 5 <= time_from_zero <= 5.5:
-        pixels[light_number] = (neo_r, neo_g, neo_b)
-        pixels.show()
+        on(light_number)
     elif 10 <= time_from_zero <= 10.5:
-        pixels[light_number] = (neo_r, neo_g, neo_b)
-        pixels.show()
+        on(light_number)
     elif 12 <= time_from_zero <= 12.5:
-        pixels[light_number] = (neo_r, neo_g, neo_b)
-        pixels.show()
+        on(light_number)
 
     elif time_from_zero > 14.5:
-        pixels[light_number] = (0, 0, 0)
-        pixels.show()
+        off(light_number)
         reset_time = time.monotonic() + random.uniform(-3, 3)
 
     else:
-        pixels[light_number] = (0, 0, 0)
-        pixels.show()
+        off(light_number)
 
     return reset_time
 
-while True:
+def carolinus(reset_time_input, light_number):
+    time_from_zero = time.monotonic() - reset_time_input
+    # creates the carry over reset_time variable so that it can be returned even if it is not updated in the last if statement
+    reset_time = reset_time_input
 
-    action_time_1 = pattern_one(action_time_1, 0)
-    action_time_2 = pattern_two(action_time_2, 1)
+    if 0 <= time_from_zero <= 0.5:
+        on(light_number)
+    elif 1 <= time_from_zero <= 1.5:
+        on(light_number)
+    elif 2 <= time_from_zero <= 2.5:
+        on(light_number)
+    elif 3 <= time_from_zero <= 3.5:
+        on(light_number)
+    elif 4 <= time_from_zero <= 4.5:
+        on(light_number)
+    elif 5 <= time_from_zero <= 5.5:
+        on(light_number)
+    elif 6 <= time_from_zero <= 6.5:
+        on(light_number)
+
+    elif time_from_zero >= 15:
+        off(light_number)
+        reset_time = time.monotonic()
+
+    else:
+        off(light_number)
+
+    return reset_time
+
+
+while True:
 
     reset_time_2 = brimleyi(reset_time_2, 2)
     reset_time_3 = brimleyi(reset_time_3, 3)
     reset_time_4 = macdermotti(reset_time_4, 4)
+    reset_time_5 = carolinus(reset_time_5, 5)
+    reset_time_6 = carolinus(reset_time_6, 6)
 
 
 
