@@ -6,6 +6,12 @@ import neopixel
 #create the neopixel. auto_write=True avoids having to push changes (at the cost of speed, which probably doesn't matter here)
 pixels = neopixel.NeoPixel(board.NEOPIXEL, 10, brightness = 0.2, auto_write=False)
 
+#variables to hold the color that hte LED will blink
+neo_r = 255
+neo_g = 255
+neo_b = 0
+
+
 #instantite the 'zero' counter
 action_time_1 = time.monotonic()
 action_time_2 = time.monotonic()
@@ -24,7 +30,7 @@ def pattern_one(action_time_input, light_number):
         print("0000000000000000000000")
         action_time =  action_time_input
     if time_from_action_1 > 9 and time_from_action_1 < 20:
-        pixels[light_number] = (255, 255, 0)
+        pixels[light_number] = (neo_r, neo_g, neo_b)
         pixels.show()
         print(time_from_action_1)
         print("1111111111111111111111")
@@ -47,7 +53,7 @@ def pattern_two(action_time_input, light_number):
         pixels.show()
 
     if 4 <= time_from_action_2 <= 6:
-        pixels[light_number] = (255, 255, 0)
+        pixels[light_number] = (neo_r, neo_g, neo_b)
         pixels.show()
 
     if 7 < time_from_action_2 <= 9:
@@ -55,7 +61,7 @@ def pattern_two(action_time_input, light_number):
         pixels.show()
 
     if 9 < time_from_action_2 <= 12:
-        pixels[light_number] = (255, 255, 0)
+        pixels[light_number] = (neo_r, neo_g, neo_b)
         pixels.show()
 
     if 12 < time_from_action_2 <= 15:
@@ -63,7 +69,7 @@ def pattern_two(action_time_input, light_number):
         pixels.show()
 
     if 15 < time_from_action_2 <= 22:
-        pixels[light_number] = (255, 255, 0)
+        pixels[light_number] = (neo_r, neo_g, neo_b)
         pixels.show()
 
     if time_from_action_2 > 22:
