@@ -6,25 +6,29 @@ import time
 import neopixel
 import random
 
-#create the neopixel. auto_write=True avoids having to push changes (at the cost of speed, which probably doesn't matter here)
-pixels = neopixel.NeoPixel(board.NEOPIXEL, 10, brightness = 0.2, auto_write=False)
 
-#variables to hold the color that hte LED will blink
+
+#variables to hold the color that the LED will blink
 neo_r = 255
 neo_g = 255
 neo_b = 0
 
+# variable to hold the number of neopixels
+number_of_lights = 7
 
-#instantite the 'zero' counter
-#right now you need on of these (reset_time_x) for each light
-action_time_1 = time.monotonic()
-action_time_2 = time.monotonic()
+#create the neopixel. auto_write=True avoids having to push changes (at the cost of speed, which probably doesn't matter here)
+pixels = neopixel.NeoPixel(board.NEOPIXEL, number_of_lights, brightness = 0.2, auto_write=False)
 
-reset_time_2 = time.monotonic()
-reset_time_3 = time.monotonic()
-reset_time_4 = time.monotonic()
-reset_time_5 = time.monotonic()
-reset_time_6 = time.monotonic()
+# automatically spins up the seed reset times for each light
+reset_time_dict = {}
+
+# sets the seeds to zero
+for i in range(0, number_of_lights):
+    var_name = 'resetTime' + str(i)
+    reset_time_dict[var_name] = time.monotonic()
+
+
+print(reset_time_dict)
 
 def on(light_num):
     pixels[light_num] = (neo_r, neo_g, neo_b)
@@ -113,11 +117,11 @@ def carolinus(reset_time_input, light_number):
 
 while True:
 
-    reset_time_2 = brimleyi(reset_time_2, 2)
-    reset_time_3 = brimleyi(reset_time_3, 3)
-    reset_time_4 = macdermotti(reset_time_4, 4)
-    reset_time_5 = carolinus(reset_time_5, 5)
-    reset_time_6 = carolinus(reset_time_6, 6)
+    reset_time_dict["resetTime2"] = brimleyi(reset_time_dict["resetTime2"], 2)
+    reset_time_dict["resetTime3"] = brimleyi(reset_time_dict["resetTime3"], 3)
+    reset_time_dict["resetTime4"] = macdermotti(reset_time_dict["resetTime4"], 4)
+    reset_time_dict["resetTime5"] = carolinus(reset_time_dict["resetTime5"], 5)
+    reset_time_dict["resetTime6"] = carolinus(reset_time_dict["resetTime6"], 6)
 
 
 
