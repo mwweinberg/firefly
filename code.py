@@ -135,8 +135,6 @@ while True:
     #use the series of if statements to match the randomly assigned number to the types of fireflies
 
     for i in range (0, number_of_lights):
-        bug_holder[i].reset_time_input = brimleyi(bug_holder[i].reset_time_input, i)
-        print(bug_holder[i].type)
         if bug_holder[i].type == 1:
             bug_holder[i].reset_time_input = brimleyi(bug_holder[i].reset_time_input, i)
         elif bug_holder[i].type == 2:
